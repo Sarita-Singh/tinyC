@@ -53,6 +53,8 @@ public:
     sym* linkChildSymTable(sym_table*);
 };
 
+enum _regType {RETURN, PARAM};
+
 class activation_record {
 public:
     map<string, int> shift;
