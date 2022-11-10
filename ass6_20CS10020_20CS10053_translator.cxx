@@ -73,6 +73,17 @@ void sym_table::print()
     {
         cout << setw(20) << symIterator.first;
         fflush(stdout);
+        cout << setw(20);
+        if(symIterator.second.grp == sym::LOC)
+            cout << "local";
+        else if(symIterator.second.grp == sym::GLB)
+            cout << "global";
+        else if(symIterator.second.grp == sym::FUNC)
+            cout << "function";
+        else if(symIterator.second.grp == sym::PARAMS)
+            cout << "parameter";
+        else if(symIterator.second.grp == sym::TEMP)
+            cout << "temporary";
         cout << setw(40) << symIterator.second.type->printType();
         cout << setw(20) << symIterator.second.initValue << setw(20) << symIterator.second.offset << setw(20) << symIterator.second.size;
         cout << setw(20) << (symIterator.second.childTable ? symIterator.second.childTable->name : "NULL") << endl;

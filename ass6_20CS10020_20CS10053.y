@@ -1,5 +1,5 @@
 %{
-    #include "ass5_20CS10020_20CS10053_translator.h"
+    #include "ass6_20CS10020_20CS10053_translator.h"
     extern int lineCounter;
     extern int yylex();
     void yyerror(string);
@@ -205,7 +205,7 @@ primary_expression:
                             $$ = new Exp();
 		                    $$->symbol = generate_temp(sym_type::_type::PTR, $1);
 		                    $$->symbol->type->arrType = new sym_type(sym_type::_type::CHAR);
-                            emit("=str", $$->symbol->name, str_list.size());
+                            emit("=str", $$->symbol->name, int(str_list.size()));
                             str_list.push_back($1);
                         }
                     | OPEN_PARENTHESES expression CLOSED_PARENTHESES { 
@@ -1621,7 +1621,7 @@ function_definition:
                             table_cnt = 0;
                             emit("labelend", $2->name);
                             if($2->type->type != sym_type::VOID) {
-                                curr_table->lookup("return")->update($2->type);
+                                curr_table->lookup("return")->updateSym($2->type);
                             }
                             switch_table(global_table);
                         }

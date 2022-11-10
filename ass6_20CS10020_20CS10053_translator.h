@@ -6,6 +6,7 @@
 #include <vector>
 #include <algorithm>
 #include <list>
+#include <stack>
 #include <functional>
 #include <iomanip>
 #include <string.h>
@@ -53,7 +54,7 @@ public:
     sym* linkChildSymTable(sym_table*);
 };
 
-enum _regType {RETURN, PARAM};
+enum _regType {RET, PARAM};
 
 class activation_record {
 public:
