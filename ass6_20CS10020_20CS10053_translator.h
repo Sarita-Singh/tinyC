@@ -123,6 +123,7 @@ void emit(string, string, float, string = "");
 
 // backpatching
 void back_patch(list<int>, int);
+void back_patch_last();
 list<int> make_list(int i);
 list<int> merge(list<int>, list<int>);
 
@@ -134,7 +135,6 @@ int next_instrn();
 sym *generate_temp(sym_type::_type, string = "");  
 void switch_table(sym_table* new_table);  
 bool check_sym_type(sym *&s1, sym *&s2);  
-void Bp_last();
 
 // Global variables to be exported to the cxx file
 extern quad_array *quad_arr; // array of quads

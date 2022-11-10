@@ -130,8 +130,29 @@ void sym_table::update()
         }
     }
     // activation record for the curr_table
-    act_rec = new activationrecord();
+    act_rec = new activation_record();
 
+    for(auto &symIterator : this->symbolMap) {
+
+        if(symIterator.second.grp == sym::Grp::PARAMS) {
+
+            if(symIterator.second.size != 0) {
+                act_rec->final_shift -= symIterator.second.size;
+                act_rec->shift[symIterator.second.name] = act_rec->final_shift;
+            }
+        }
+    }
+
+    for(auto &symIterator : this->symbolMap) {
+
+        if(symIterator.second.grp == sym::Grp::TEMP || (symIterator.second.grp == sym::Grp::LOC && symIterator.second.name != "return")) {
+
+            if(symIterator.second.size != 0) {
+                act_rec->final_shift -= symIterator.second.size;
+                act_rec->shift[symIterator.second.name] = act_rec->final_shift;
+            }
+        }
+    }
     
     
     for (auto &table : visited)  // update children table
@@ -221,7 +242,8 @@ void quad::print() {
     else if(this->opcode == "return") cout << "return " << this->result << endl;
     else if(this->opcode == "param") cout << "param " << this->result << endl;
     else if(this->opcode == "goto") cout << "goto " << this->result << endl;
-    else if(this->opcode == "label") cout << this->result << endl;
+    else if(this->opcode == "label") cout << "Start of function: " << this->result << endl;
+    else if(this->opcode == "labelend") cout << "End of function: " << this->result << endl;
     else if(this->opcode == "=[]") cout << this->result << " = " << this->arg1 << "[" << this->arg2 << "]" << endl;
     else if(this->opcode == "[]=") cout << this->result << " = " << "[" << this->arg1 << "]" << this->arg2 << endl;
     else if(this->opcode == "+" || this->opcode == "-" || this->opcode == "*" || this->opcode == "/" || this->opcode == "%" || this->opcode == "|" || this->opcode == "^" || this->opcode == "&" || this->opcode == "<<" || this->opcode == ">>")
@@ -240,6 +262,8 @@ void quad::print() {
         cout << this->result << " = ~ " << this->arg1 << endl;
     else if(this->opcode == "!")
         cout << this->result << " = ! " << this->arg1 << endl;
+    else if(this->opcode == "=str")
+        cout << this->result << " = " << str_list[atoi(this->arg1.c_str())] << endl;
     else {
         cout << "opcode: " << this->opcode << "  arg1: " << this->arg1 << "  arg2: " << this->arg2 << "  result: " << this->result << endl;
         cout << "Error: Invalid Opcode" << endl;
@@ -277,6 +301,17 @@ void back_patch(list<int> existingList, int address) {
     //cout<<"back_patch"<<endl;
     for(auto i = existingList.begin(); i != existingList.end(); i++) {
         quad_arr->array[(*i)-1].result = to_string(address);
+    }
+}
+
+void back_patch_last() {
+    //cout<<"back_patch_last"<<endl;
+    int curr_pos = quad_arr->array.size();
+    int last_exit = -1;
+    for(auto quadIterator = quad_arr->array.rbegin(); quadIterator != quad_arr->array.rend(); quadIterator++) {
+        if((*quadIterator).opcode == "labelend") last_exit = curr_pos;
+        else if(((*quadIterator).opcode == "goto" || (*quadIterator).opcode == "==" || (*quadIterator).opcode == "!=" || (*quadIterator).opcode == "<" || (*quadIterator).opcode == ">" || (*quadIterator).opcode == "<=" || (*quadIterator).opcode == ">=") && (*quadIterator).result.empty()) (*quadIterator).result = convertToString(last_exit);
+        curr_pos--;
     }
 }
 
@@ -325,6 +360,7 @@ int next_instrn() { return (quad_arr->array.size())+1; }
 sym *generate_temp(sym_type::_type type, string initValue) {
     //cout<<"generate_temp"<<endl;
     sym* temp = new sym("t" + to_string(temp_cnt++), type, initValue);
+    temp->grp = sym::Grp::TEMP;
     curr_table->symbolMap.insert({temp->name, *temp});
     return temp;
 }
@@ -351,14 +387,14 @@ bool check_sym_type(sym *&s1, sym *&s2)
 }
 
 
-int main() {
-    table_cnt = 0, temp_cnt = 0;
-    global_table = new sym_table("glb");
-    curr_table = global_table;
-    quad_arr = new quad_array();
-    yyparse();
-    global_table->update();
-    global_table->print();
-    quad_arr->print();
-    return 0;
-}
+// int main() {
+//     table_cnt = 0, temp_cnt = 0;
+//     global_table = new sym_table("glb");
+//     curr_table = global_table;
+//     quad_arr = new quad_array();
+//     yyparse();
+//     global_table->update();
+//     global_table->print();
+//     quad_arr->print();
+//     return 0;
+// }
