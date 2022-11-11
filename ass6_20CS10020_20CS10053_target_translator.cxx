@@ -11,16 +11,19 @@ map<int, string> paramRegMap[] = {{{1, "dil"}, {4, "edi"}, {8, "rdi"}},
 map<int, string> labelsInAsm;
 
 string getReg(_regType regType, int size, int paramIndex = 0) {
+    cout << "getReg" << endl;
     return regType == _regType::RET ? returnRegMap[size] : paramRegMap[paramIndex][size];
 }
 
 int getCharAscii(string a) {
+    cout << "getCharAscii" << endl;
     return (int)a[1];
 }
 
 
 
 string stack_location(string param) {
+    cout << "stack_location" << endl;
     if(current_func_act_rec->shift.count(param))
         return convertToString(current_func_act_rec->shift[param]) + "(%rbp)";
     else 
@@ -28,6 +31,7 @@ string stack_location(string param) {
 }
 
 void pushRegtoStack(string paramName, int paramIndex) {
+    cout << "pushRegtoStack" << endl;
     sym *symbol = curr_table->lookup(paramName);
     int size = symbol->size;
     auto s_type = symbol->type->type;
@@ -46,6 +50,7 @@ void pushRegtoStack(string paramName, int paramIndex) {
 
 
 void popRegfromStack(string paramName, int paramIndex) {
+    cout << "popRegfromStack" << endl;
     sym *symbol = curr_table->lookup(paramName);
     int size = symbol->size;
     auto s_type = symbol->type->type;
@@ -65,7 +70,7 @@ void popRegfromStack(string paramName, int paramIndex) {
 }
 
 void makeAssembly(string inputFile) {
-
+    cout << "makeAssembly" << endl;
     int labelCount = 0;
     bool isFuncBody = false;
     string glbString;
@@ -410,17 +415,16 @@ void makeAssembly(string inputFile) {
 
 int main(int argc, char const *argv[]) {
     temp_cnt = table_cnt = 0;  // initialize global variables
-    global_table = new sym_table("global");
+    global_table = new sym_table("glb");
     curr_table = global_table;
     
-    string inputFile = string(argv[1]) + ".c";
-    yyin = fopen(inputFile.c_str(), "r");
+    yyin = fopen(argv[1], "r");
     yyparse();
-
+    
     global_table->update();
     global_table->print();
     back_patch_last();
     quad_arr->print();
-    makeAssembly(inputFile);
+    makeAssembly(string(argv[1]));
     return 0;
 }

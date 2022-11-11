@@ -1002,18 +1002,18 @@ type_specifier:
                     {
                          yyinfo("type_specifier -> unsigned"); 
                     }
-                | _BOOL
-                    {
-                         yyinfo("type_specifier -> _Bool"); 
-                    }
-                | _COMPLEX
-                    {
-                         yyinfo("type_specifier -> _Complex"); 
-                    }
-                | _IMAGINARY
-                    {
-                         yyinfo("type_specifier -> _Imaginary"); 
-                    }
+                // | _BOOL
+                //     {
+                //          yyinfo("type_specifier -> _Bool"); 
+                //     }
+                // | _COMPLEX
+                //     {
+                //          yyinfo("type_specifier -> _Complex"); 
+                //     }
+                // | _IMAGINARY
+                //     {
+                //          yyinfo("type_specifier -> _Imaginary"); 
+                //     }
                 | enum_specifier 
                     {
                          yyinfo("type_specifier -> enum_specifier"); 
@@ -1208,7 +1208,7 @@ direct_declarator:
                             }
                             //cout << "childTable change: " << $1->childTable << " " << curr_table << endl;
                             $1->childTable = curr_table;
-                            $1->grp = sym::FUNC;
+                            $1->grp = sym::Grp::FUNC;
                             curr_table->parent = global_table;
                             switch_table(global_table);
                             curr_symbol = $$;
@@ -1226,7 +1226,7 @@ direct_declarator:
                             }
                             //cout << "childTable change: " << $1->childTable << " " << curr_table << endl;
                             $1->childTable = curr_table;
-                            $1->grp = sym::FUNC;
+                            $1->grp = sym::Grp::FUNC;
                             curr_table->parent = global_table;
                             switch_table(global_table);
                             curr_symbol = $$;
@@ -1294,7 +1294,7 @@ parameter_declaration:
                         declaration_specifiers declarator
                             { 
                                 yyinfo("parameter_declaration -> declaration_specifiers declarator"); 
-                                $2->grp = sym::PARAMS; 
+                                $2->grp = sym::Grp::PARAMS; 
                                 curr_table->params.push_back($2->name);
                             }
                         | declaration_specifiers
@@ -1620,7 +1620,7 @@ function_definition:
                             yyinfo("function_definition -> declaration_specifiers declarator declaration_list_opt compound_statement"); 
                             table_cnt = 0;
                             emit("labelend", $2->name);
-                            if($2->type->type != sym_type::VOID) {
+                            if($2->type->type != sym_type::_type::VOID) {
                                 curr_table->lookup("return")->updateSym($2->type);
                             }
                             switch_table(global_table);
@@ -1672,6 +1672,7 @@ N: {
 
 
 change_scope: {
+                yyinfo("change scope");
                 if(curr_symbol->childTable == NULL) {
                     switch_table(new sym_table(""));
                 }
@@ -1689,5 +1690,6 @@ void yyerror(string e) {
 
 void yyinfo(string s) {
     // Uncomment while debugging...
-    // printf("Line %d: %s\n", lineCounter, s.c_str());
+    printf("Line %d: %s\n", lineCounter, s.c_str());
+    fflush(stdout);
 }

@@ -1,10 +1,10 @@
 test: parser.out libass6.a
 	@echo "\nGenerating assembly files\n"
-	./parser.out testFiles/ass6_20CS10020_20CS10053_test1 > quadsOutput/ass6_20CS10020_20CS10053_quads1.out
-	./parser.out testFiles/ass6_20CS10020_20CS10053_test2 > quadsOutput/ass6_20CS10020_20CS10053_quads2.out
-	./parser.out testFiles/ass6_20CS10020_20CS10053_test3 > quadsOutput/ass6_20CS10020_20CS10053_quads3.out
-	./parser.out testFiles/ass6_20CS10020_20CS10053_test4 > quadsOutput/ass6_20CS10020_20CS10053_quads4.out
-	./parser.out testFiles/ass6_20CS10020_20CS10053_test5 > quadsOutput/ass6_20CS10020_20CS10053_quads5.out
+	./parser.out testFiles/ass6_20CS10020_20CS10053_test1.c > quadsOutput/ass6_20CS10020_20CS10053_quads1.out
+	./parser.out testFiles/ass6_20CS10020_20CS10053_test2.c > quadsOutput/ass6_20CS10020_20CS10053_quads2.out
+	./parser.out testFiles/ass6_20CS10020_20CS10053_test3.c > quadsOutput/ass6_20CS10020_20CS10053_quads3.out
+	./parser.out testFiles/ass6_20CS10020_20CS10053_test4.c > quadsOutput/ass6_20CS10020_20CS10053_quads4.out
+	./parser.out testFiles/ass6_20CS10020_20CS10053_test5.c > quadsOutput/ass6_20CS10020_20CS10053_quads5.out
 	@echo "\nCompiling assembly files\n"
 	gcc assemblyFiles/ass6_20CS10020_20CS10053_test1.s -L. -lass2_19CS30031 -no-pie -o test1
 	gcc assemblyFiles/ass6_20CS10020_20CS10053_test2.s -L. -lass2_19CS30031 -no-pie -o test2
@@ -24,7 +24,7 @@ test: parser.out libass6.a
 	@./test5 > outputFiles/ass6_20CS10020_20CS10053_test5.txt
 
 parser.out: lex.yy.o y.tab.o ass6_20CS10020_20CS10053_translator.o ass6_20CS10020_20CS10053_target_translator.o
-	g++ lex.yy.o y.tab.o ass6_20CS10020_20CS10053_translator.o ass6_20CS10020_20CS10053_target_translator.o -lfl -o parser.out
+	g++ -g lex.yy.o y.tab.o ass6_20CS10020_20CS10053_translator.o ass6_20CS10020_20CS10053_target_translator.o -o parser.out
 
 ass6_20CS10020_20CS10053_target_translator.o: ass6_20CS10020_20CS10053_target_translator.cxx ass6_20CS10020_20CS10053_translator.h
 	g++ -c ass6_20CS10020_20CS10053_target_translator.cxx
@@ -52,5 +52,5 @@ myl.o: myl.c myl.h
 
 clean:
 	@echo "\nI am clearing my junk.\n\n"
-	rm libass6.a myl.o parser.out ass6_20CS10020_20CS10053_translator.o ass6_20CS10020_20CS10053_target_translator.o lex.yy.* y.tab.* y.output assemblyFiles/*.s
+	rm libass6.a myl.o parser.out ass6_20CS10020_20CS10053_translator.o ass6_20CS10020_20CS10053_target_translator.o lex.yy.* y.tab.* y.output assemblyFiles/*.s quadsOutput/*.out
 	@echo "\nYay. I made your workspace clean.\n\n"
