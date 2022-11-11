@@ -91,7 +91,7 @@ public:
 
 class quad_array {
 public:
-    vector<quad> array;
+    vector<quad *> array;
     void print();
 };
 
@@ -140,7 +140,7 @@ void switch_table(sym_table* new_table);
 bool check_sym_type(sym *&s1, sym *&s2);  
 
 // Global variables to be exported to the cxx file
-extern quad_array *quad_arr; // array of quads
+extern vector<quad *> quad_arr; // array of quads
 extern sym_table *curr_table; // current symbol table
 extern sym_table *global_table; // global symbol table
 extern sym *curr_symbol;  // A pointer pointing to the current symbol

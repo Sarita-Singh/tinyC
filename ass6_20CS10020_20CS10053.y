@@ -1690,6 +1690,6 @@ void yyerror(string e) {
 
 void yyinfo(string s) {
     // Uncomment while debugging...
-    printf("Line %d: %s\n", lineCounter, s.c_str());
-    fflush(stdout);
+    // printf("Line %d: %s\n", lineCounter, s.c_str());
+    // fflush(stdout);
 }

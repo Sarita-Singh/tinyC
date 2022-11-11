@@ -32,6 +32,5 @@ int main () {
       printStr("\n        ");
     }
   }
-  printStr("\n");
-  return;
+  return 0;
 }

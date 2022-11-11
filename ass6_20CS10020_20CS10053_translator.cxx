@@ -1,7 +1,7 @@
 #include "ass6_20CS10020_20CS10053_translator.h"
 
 // Global variables
-quad_array *quad_arr; // array of quads
+vector<quad *> quad_arr; // array of quads
 sym_table *curr_table; // current symbol table
 sym_table *global_table; // global symbol table
 sym *curr_symbol;  // A pointer pointing to the current symbol
@@ -15,7 +15,7 @@ sym_type::sym_type(_type type,  int symWidth, sym_type *arrType) : type(type), s
 // Definition of getWidth for symbol types
 int sym_type::getWidth()
 {
-    cout << "symtype::getWidth" << endl;
+    //cout << "symtype::getWidth" << endl;
     if (this->type == CHAR)
         return sizeof(char);
     else if (this->type == INT )
@@ -37,7 +37,7 @@ sym_table::sym_table(string name, sym_table *parent) : name(name), parent(parent
 // Definition of lookup for symbol table
 sym* sym_table::lookup(string name)
 {   
-    cout << "sym_table::lookup " << name << " " << this << " " << this->name << " " << this->parent << endl;
+    //cout << "sym_table::lookup " << name << " " << this << " " << this->name << " " << this->parent << endl;
     
     auto symIterator = this->symbolMap.find(name);
     if(symIterator != this->symbolMap.end()) return &(symIterator->second);
@@ -60,7 +60,7 @@ sym* sym_table::lookup(string name)
 // Definition of print function for symbol table
 void sym_table::print()
 {
-    cout << "sym_table::print" << endl;
+    //cout << "sym_table::print" << endl;
     cout << string(140, '+') << endl;
     cout << setw(20) << "Table Name: " << this->name << setw(40) <<"\t\t Parent Name: "<< ((this->parent)?this->parent->name:"None") << endl;
     cout << string(140, '+') << endl;
@@ -116,8 +116,8 @@ string sym_type::printType()
 // Definition of update for symbol table
 void sym_table::update()
 {
-    cout << "sym_table::update" << endl;
-    cout << this->name << endl;
+    //cout << "sym_table::update" << endl;
+    //cout << this->name << endl;
     vector<sym_table*> visited;
     int offset;
     bool flag = true;
@@ -179,7 +179,7 @@ sym::sym(string name, sym_type::_type type, string initValue) : name(name), type
 
 // Definition of update symbol for symbol class
 sym* sym::updateSym(sym_type* type) {
-    cout << "sym::updateSym" << endl;
+    //cout << "sym::updateSym" << endl;
     this->type = type;
     this->size = this->type->getWidth();
     return this;
@@ -187,7 +187,7 @@ sym* sym::updateSym(sym_type* type) {
 
 // Definition of typeCast for symbol class
 sym* sym::typeCast(sym_type::_type type) {
-    cout << "sym::typeCast" << endl;
+    //cout << "sym::typeCast" << endl;
     if((this->type)->type == sym_type::_type::INT) {
         if(type == sym_type::_type::FLOAT) {
             sym* floatSym = generate_temp(type);
@@ -232,7 +232,7 @@ sym* sym::typeCast(sym_type::_type type) {
 
 // Definition of linked children symbol tables for symbol class
 sym* sym::linkChildSymTable(sym_table* table) {
-    cout << "sym::linkChildSymTable" << endl;
+    //cout << "sym::linkChildSymTable" << endl;
     this->childTable = table;
     return this;
 }
@@ -246,7 +246,7 @@ quad::quad(string opcode, string result, float arg1, string arg2) : opcode(opcod
 }
 
 void quad::print() {
-    cout << "quad::print()" << endl;
+    //cout << "quad::print()" << endl;
     if(this->opcode == "=") cout << this->result << " = " << this->arg1 << endl;
     else if(this->opcode == "call") cout << this->result << " = call " << this->arg1 << ", " << this->arg2 << endl;
     else if(this->opcode == "return") cout << "return " << this->result << endl;
@@ -281,67 +281,68 @@ void quad::print() {
 }
 
 void quad_array::print() {
-    cout << "quad_array::print()" << endl;
+    //cout << "quad_array::print()" << endl;
     int lineNo = 1;
     for(auto quad: this->array) {
         cout << lineNo++ << ": ";
-        quad.print();
-    }
+        quad->print();
+    }   
 }
 
 void emit(string opcode, string result, string arg1, string arg2) {
-    cout << "emit1: " << opcode << " " << result << " " << arg1 << " " << arg2 << endl;
-    //quad* newQuad = new quad(opcode, result, arg1, arg2);
-    quad_arr->array.push_back(*(new quad(opcode, result, arg1, arg2)));
-    cout << "emitover" << endl;
+    //cout << "emit1: " << opcode << " " << result << " " << arg1 << " " << arg2 << endl;
+    quad* newQuad = new quad(opcode, result, arg1, arg2);
+    //newQuad->print();
+    quad_arr.push_back(newQuad);
+    //cout << "emitover" << endl;
 }
 
 void emit(string opcode, string result, int arg1, string arg2) {
-    cout << "emit2: " << opcode << " " << result << " " << arg1 << " " << arg2 << endl;
-    //quad* newQuad = new quad(opcode, result, arg1, arg2);
-    quad_arr->array.push_back(*(new quad(opcode, result, arg1, arg2)));
-    cout << "emitover" << endl;
+    //cout << "emit2: " << opcode << " " << result << " " << arg1 << " " << arg2 << endl;
+    quad* newQuad = new quad(opcode, result, arg1, arg2);
+    quad_arr.push_back(newQuad);
+    //cout << "emitover" << endl;
 }
 
 void emit(string opcode, string result, float arg1, string arg2) {
-    cout << "emit3: " << opcode << " " << result << " " << arg1 << " " << arg2 << endl;
-    //quad* newQuad = new quad(opcode, result, arg1, arg2);
-    quad_arr->array.push_back(*(new quad(opcode, result, arg1, arg2)));
-    cout << "emitover" << endl;
+    //cout << "emit3: " << opcode << " " << result << " " << arg1 << " " << arg2 << endl;
+    quad* newQuad = new quad(opcode, result, arg1, arg2);
+    quad_arr.push_back(newQuad);
+    //cout << "emitover" << endl;
 }
 
 void back_patch(list<int> existingList, int address) {
-    cout<<"back_patch"<<endl;
+    //cout<<"back_patch"<<endl;
     for(auto i = existingList.begin(); i != existingList.end(); i++) {
-        quad_arr->array[(*i)-1].result = convertToString(address);
+        (quad_arr[(*i)-1])->result = convertToString(address);
     }
 }
 
 void back_patch_last() {
-    cout<<"back_patch_last"<<endl;
-    int curr_pos = quad_arr->array.size();
+    //cout<<"back_patch_last"<<endl;
+    int curr_pos = quad_arr.size();
     int last_exit = -1;
-    for(auto quadIterator = quad_arr->array.rbegin(); quadIterator != quad_arr->array.rend(); quadIterator++) {
-        if((*quadIterator).opcode == "labelend") last_exit = curr_pos;
-        else if(((*quadIterator).opcode == "goto" || (*quadIterator).opcode == "==" || (*quadIterator).opcode == "!=" || (*quadIterator).opcode == "<" || (*quadIterator).opcode == ">" || (*quadIterator).opcode == "<=" || (*quadIterator).opcode == ">=") && (*quadIterator).result.empty()) (*quadIterator).result = convertToString(last_exit);
+    for(auto quadIterator = quad_arr.rbegin(); quadIterator != quad_arr.rend(); quadIterator++) {
+        if((*quadIterator)->opcode == "labelend") last_exit = curr_pos;
+        else if(((*quadIterator)->opcode == "goto" || (*quadIterator)->opcode == "==" || (*quadIterator)->opcode == "!=" || (*quadIterator)->opcode == "<" || (*quadIterator)->opcode == ">" || (*quadIterator)->opcode == "<=" || (*quadIterator)->opcode == ">=") && (*quadIterator)->result.empty()) (*quadIterator)->result = convertToString(last_exit);
         curr_pos--;
     }
 }
 
 list<int> make_list(int i) {
-    cout<<"make_list"<<endl;
+    //cout<<"make_list"<<endl;
     return {i};
 }
 
 list<int> merge(list<int>l1, list<int>l2) {
-    cout<<"merge"<<endl;
+    //cout<<"merge"<<endl;
     list<int> temp = l1;
     temp.merge(l2);
     return temp;
 }
 
 void Exp::convertToBool() {
-    cout<<"convertToBool"<<endl;
+    //cout<<"convertToBool"<<endl;
     if(this->type == Exp::_type::NON_BOOLEAN) {
         this->false_list = make_list(next_instrn());
         emit("==", "", this->symbol->name, "0");
@@ -351,37 +352,37 @@ void Exp::convertToBool() {
 }
 
 void Exp::convertToInt() {
-    cout<<"convertToInt"<<endl;
+    //cout<<"convertToInt"<<endl;
     if(this->type == Exp::_type::BOOLEAN) {
         this->symbol = generate_temp(sym_type::_type::INT);
         back_patch(this->true_list, next_instrn());
         emit("=", this->symbol->name, "true");
-        emit("goto", convertToString((int)quad_arr->array.size()+2));
+        emit("goto", convertToString((int)quad_arr.size()+2));
         back_patch(this->false_list, next_instrn());
         emit("=", this->symbol->name, "false");
     }
 }
 
-string convertToString(char c) { cout << "convertToString" << endl; return string(1, c); }
+string convertToString(char c) { return string(1, c); }
 
-string convertToString(int i) { cout << "convertToString" << endl; return to_string(i); }
+string convertToString(int i) { return to_string(i); }
 
-string convertToString(float f) { cout << "convertToString" << endl; return to_string(f); }
+string convertToString(float f) { return to_string(f); }
 
-int next_instrn() { return (quad_arr->array.size())+1; }
+int next_instrn() { return (quad_arr.size())+1; }
 
 sym *generate_temp(sym_type::_type type, string initValue) {
-    cout<<"generate_temp"<<endl;
+    //cout<<"generate_temp"<<endl;
     sym* temp = new sym("t" + to_string(temp_cnt++), type, initValue);
     temp->grp = sym::Grp::TEMP;
     curr_table->symbolMap.insert({temp->name, *temp});
     return temp;
 }
 
-void switch_table(sym_table* new_table) { cout << "switch_table: " << new_table->name << endl; curr_table = new_table; }
+void switch_table(sym_table* new_table) { curr_table = new_table; }
 
 bool check_sym_type_type(sym_type* a, sym_type* b) {
-    cout<<"check_sym_type_type"<<endl;
+    //cout<<"check_sym_type_type"<<endl;
     if(a == NULL && b == NULL) return true;
     if(a == NULL || b == NULL) return false;
     if(a->type != b->type) return false;
@@ -390,7 +391,7 @@ bool check_sym_type_type(sym_type* a, sym_type* b) {
 
 bool check_sym_type(sym *&s1, sym *&s2)
 {   
-    cout<<"check_sym_type"<<endl;
+    //cout<<"check_sym_type"<<endl;
     sym_type* a = s1->type;
     sym_type* b = s2->type;
     if(check_sym_type_type(a, b)) return true;

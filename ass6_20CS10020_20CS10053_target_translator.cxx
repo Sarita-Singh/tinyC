@@ -1,9 +1,10 @@
 #include "ass6_20CS10020_20CS10053_translator.h"
+#include <fstream>
 
 activation_record *current_func_act_rec;
 
 map<int, string> returnRegMap = {{1, "al"}, {4, "eax"}, {8, "rax"}};
-map<int, string> paramRegMap[] = {{{1, "dil"}, {4, "edi"}, {8, "rdi"}},
+vector<map<int, string>> paramRegMap = {{{1, "dil"}, {4, "edi"}, {8, "rdi"}},
                                   {{1, "sil"}, {4, "esi"}, {8, "rsi"}},
                                   {{1, "dl"}, {4, "edx"}, {8, "rdx"}},
                                   {{1, "cl"}, {4, "ecx"}, {8, "rcx"}}};
@@ -11,19 +12,19 @@ map<int, string> paramRegMap[] = {{{1, "dil"}, {4, "edi"}, {8, "rdi"}},
 map<int, string> labelsInAsm;
 
 string getReg(_regType regType, int size, int paramIndex = 0) {
-    cout << "getReg" << endl;
-    return regType == _regType::RET ? returnRegMap[size] : paramRegMap[paramIndex][size];
+    //cout << "getReg: " << regType << " " << size << " " << paramIndex << endl;
+    return regType == _regType::RET ? "%" + returnRegMap[size] : "%" + paramRegMap[paramIndex][size];
 }
 
 int getCharAscii(string a) {
-    cout << "getCharAscii" << endl;
+    //cout << "getCharAscii" << endl;
     return (int)a[1];
 }
 
 
 
 string stack_location(string param) {
-    cout << "stack_location" << endl;
+    //cout << "stack_location" << endl;
     if(current_func_act_rec->shift.count(param))
         return convertToString(current_func_act_rec->shift[param]) + "(%rbp)";
     else 
@@ -31,7 +32,7 @@ string stack_location(string param) {
 }
 
 void pushRegtoStack(string paramName, int paramIndex) {
-    cout << "pushRegtoStack" << endl;
+    //cout << "pushRegtoStack" << endl;
     sym *symbol = curr_table->lookup(paramName);
     int size = symbol->size;
     auto s_type = symbol->type->type;
@@ -44,13 +45,13 @@ void pushRegtoStack(string paramName, int paramIndex) {
     } else if (size == 8) {
         mov_instruction += "q";
     }
-    string reg = getReg(_regType::PARAM, paramIndex, size);
-    cout << "\t" << setw(8) << mov_instruction << reg << ", " << stack_location(paramName) << endl;
+    string reg = getReg(_regType::PARAM, size, paramIndex);
+    cout << "\t" << mov_instruction << " " << reg << ", " << stack_location(paramName) << endl;
 }
 
 
 void popRegfromStack(string paramName, int paramIndex) {
-    cout << "popRegfromStack" << endl;
+    //cout << "popRegfromStack" << endl;
     sym *symbol = curr_table->lookup(paramName);
     int size = symbol->size;
     auto s_type = symbol->type->type;
@@ -64,13 +65,18 @@ void popRegfromStack(string paramName, int paramIndex) {
         if(s_type == sym_type::ARR) mov_instruction = "leaq";
         else mov_instruction += "q";
     }
-    string reg = getReg(_regType::PARAM, paramIndex, size);
+    string reg = getReg(_regType::PARAM, size, paramIndex);
 
-    cout << "\t" << setw(8) << mov_instruction << " " << stack_location(paramName) << ", " << reg << endl;
+    cout << "\t" << mov_instruction << " " << stack_location(paramName) << ", " << reg << endl;
 }
 
-void makeAssembly(string inputFile) {
-    cout << "makeAssembly" << endl;
+void makeAssembly(string inputFile, string outputFile) {
+
+    ofstream out(outputFile);
+    streambuf *coutbuf = cout.rdbuf();
+    cout.rdbuf(out.rdbuf());
+
+    //cout << "makeAssembly" << endl;
     int labelCount = 0;
     bool isFuncBody = false;
     string glbString;
@@ -96,7 +102,7 @@ void makeAssembly(string inputFile) {
     if(str_list.size() >= 1) {
         cout << "\t.section\t.rodata" << endl;
         for(auto strListIterator = str_list.begin(); strListIterator != str_list.end(); strListIterator++) {
-            cout << ".LC" << (strListIterator - str_list.begin() + 1) << ":" << endl;
+            cout << ".LC" << (strListIterator - str_list.begin()) << ":" << endl;
             cout << "\t.string\t" << *strListIterator << endl;
         }
     }
@@ -107,63 +113,63 @@ void makeAssembly(string inputFile) {
         }
     }
 
-    for(auto quadIterator = quad_arr->array.begin(); quadIterator != quad_arr->array.end(); quadIterator++) {
-        if((*quadIterator).opcode == "label") {
-            labelsInAsm[quadIterator - quad_arr->array.begin() + 1] = ".LFB" + convertToString(labelCount);
+    for(auto quadIterator = quad_arr.begin(); quadIterator != quad_arr.end(); quadIterator++) {
+        if((*quadIterator)->opcode == "label") {
+            labelsInAsm[quadIterator - quad_arr.begin() + 1] = ".LFB" + convertToString(labelCount);
         }
-        else if((*quadIterator).opcode == "labelend") {
-            labelsInAsm[quadIterator - quad_arr->array.begin() + 1] = ".LFE" + convertToString(labelCount++);
+        else if((*quadIterator)->opcode == "labelend") {
+            labelsInAsm[quadIterator - quad_arr.begin() + 1] = ".LFE" + convertToString(labelCount++);
         }
     }
 
-    for(auto quadIterator = quad_arr->array.begin(); quadIterator != quad_arr->array.end(); quadIterator++) {
-        if((*quadIterator).opcode == "goto" || (*quadIterator).opcode == "==" || (*quadIterator).opcode == "!=" || (*quadIterator).opcode == "<" || (*quadIterator).opcode == ">" || (*quadIterator).opcode == "<=" || (*quadIterator).opcode == ">=") {
-            int temp = stoi((*quadIterator).result);
+    for(auto quadIterator = quad_arr.begin(); quadIterator != quad_arr.end(); quadIterator++) {
+        if((*quadIterator)->opcode == "goto" || (*quadIterator)->opcode == "==" || (*quadIterator)->opcode == "!=" || (*quadIterator)->opcode == "<" || (*quadIterator)->opcode == ">" || (*quadIterator)->opcode == "<=" || (*quadIterator)->opcode == ">=") {
+            int temp = stoi((*quadIterator)->result);
             if(labelsInAsm.count(temp) == 0) {
                 labelsInAsm[temp] = ".L" + convertToString(labelCount++);
             }
         }
     }
 
-    for(auto quadIterator = quad_arr->array.begin(); quadIterator != quad_arr->array.end(); quadIterator++) {
+    for(auto quadIterator = quad_arr.begin(); quadIterator != quad_arr.end(); quadIterator++) {
 
-        int quadIndex = int(quadIterator - quad_arr->array.begin()) + 1;
+        int quadIndex = int(quadIterator - quad_arr.begin()) + 1;
         
-        if(quadIterator->opcode =="label"){
+        if((*quadIterator)->opcode =="label"){
             if(isFuncBody == false) {
                 cout << "\t.text" << endl;
                 isFuncBody = true;
             }
-            curr_table = global_table->lookup(quadIterator->result)->childTable;
+            curr_table = global_table->lookup((*quadIterator)->result)->childTable;
             int param_cnt = 1;
             current_func_act_rec = curr_table->act_rec;
             funcEndLabel = labelsInAsm[quadIndex];
             funcEndLabel[3] = 'E';
 
-            cout << "\t" << setw(8) << ".globl" << quadIterator->result << endl;
-            cout << "\t" << setw(8) << ".type" << quadIterator->result << ", @function" << endl;
-            cout << quadIterator->result << ":" << endl;
+            cout << "\t" << ".globl " << (*quadIterator)->result << endl;
+            cout << "\t" << ".type " << (*quadIterator)->result << ", @function" << endl;
+            cout << (*quadIterator)->result << ":" << endl;
             cout << labelsInAsm[quadIndex] << ":" << endl;
             cout << "\t" << ".cfi_startproc" << endl;
-            cout << "\t" << setw(8) << "pushq" << "%rbp" << endl;
+            cout << "\t" << "pushq " << "%rbp" << endl;
             cout << "\t.cfi_def_cfa_offset 16" << endl;
             cout << "\t.cfi_offset 6, -16" << endl;
-            cout << "\t" << setw(8) << "movq" << "%rsp, %rbp" << endl;
+            cout << "\t" << "movq " << "%rsp, %rbp" << endl;
             cout << "\t.cfi_def_cfa_register 6" << endl;
-            cout << "\t" << setw(8) << "subq" << "$" << -current_func_act_rec->final_shift << ", %rsp" << endl;
+            cout << "\t" << "subq " << "$" << -current_func_act_rec->final_shift << ", %rsp" << endl;
 
             for(auto param:curr_table->params){
                 popRegfromStack(param, param_cnt++);
             }
         }
-        else if(quadIterator->opcode =="labelend") {
+        else if((*quadIterator)->opcode =="labelend") {
             cout << "\t" << "movq %rbp, %rsp" << endl;
             cout << "\t" << "popq %rbp" << endl;
             cout << "\t" << ".cfi_def_cfa 7, 8" << endl;
             cout << "\t" << "ret" << endl;
             cout << "\t" << ".cfi_endproc" << endl;
             cout << labelsInAsm[quadIndex] << ":" << endl;
-            cout << "\t" << ".size " << (*quadIterator).result << ", .-" << (*quadIterator).result << endl;
+            cout << "\t" << ".size " << (*quadIterator)->result << ", .-" << (*quadIterator)->result << endl;
         }
         else {
             if(isFuncBody) {
@@ -172,7 +178,7 @@ void makeAssembly(string inputFile) {
                     cout << labelsInAsm[quadIndex] << ":" << endl;
                 }
 
-                string opcode = quadIterator->opcode, arg1 = quadIterator->arg1, arg2 = quadIterator->arg2, result = quadIterator->result;
+                string opcode = (*quadIterator)->opcode, arg1 = (*quadIterator)->arg1, arg2 = (*quadIterator)->arg2, result = (*quadIterator)->result;
 
                 if(opcode == "=") {
                     if(isdigit(arg1[0])) {
@@ -229,26 +235,26 @@ void makeAssembly(string inputFile) {
                 }
                 else if(opcode == "return") {
                     if(!result.empty()) {
-                        switch(curr_table->lookup(arg1)->size) {
+                        switch(curr_table->lookup(result)->size) {
                             case 1:
-                                cout << "\t" << "movb " << stack_location(arg1) << ", %al" << endl;
+                                cout << "\t" << "movb " << stack_location(result) << ", %al" << endl;
                                 break;
                             case 4:
-                                cout << "\t" << "movl " << stack_location(arg1) << ", %eax" << endl;
+                                cout << "\t" << "movl " << stack_location(result) << ", %eax" << endl;
                                 break;
                             case 8:
-                                cout << "\t" << "movq " << stack_location(arg1) << ", %rax" << endl;
+                                cout << "\t" << "movq " << stack_location(result) << ", %rax" << endl;
                                 break;
                             default:
                                 break;
                         }
                     }
-                    if(quad_arr->array[quadIndex].opcode != "labelend") {
-                        cout << "\tjmp" << funcEndLabel << endl;
+                    if((quad_arr[quadIndex])->opcode != "labelend") {
+                        cout << "\tjmp " << funcEndLabel << endl;
                     }
                 }
                 else if(opcode == "goto") {
-                    cout << "\tjmp" << labelsInAsm[stoi(result)] << endl;
+                    cout << "\tjmp " << labelsInAsm[stoi(result)] << endl;
                 }
                 else if(opcode == "==" || opcode == "!=" || opcode == "<" || opcode == ">" || opcode == "<=" || opcode == ">=") {
                     
@@ -369,41 +375,41 @@ void makeAssembly(string inputFile) {
                 }
             }
             else {
-                curr_symbol = global_table->lookup(quadIterator->result);
+                curr_symbol = global_table->lookup((*quadIterator)->result);
 
                 if(curr_symbol->grp == sym::TEMP){
                     if(curr_symbol->type->type == sym_type::CHAR)
-                        glbChar = getCharAscii(quadIterator->arg1);
+                        glbChar = getCharAscii((*quadIterator)->arg1);
                     else if(curr_symbol->type->type == sym_type::INT)
-                        glbInt = stoi(quadIterator->arg1);
+                        glbInt = stoi((*quadIterator)->arg1);
                     else if(curr_symbol->type->type == sym_type::PTR)
-                        glbString = ".LC" + quadIterator->arg1;
+                        glbString = ".LC" + (*quadIterator)->arg1;
                 }
                 else {
                     if(curr_symbol->type->type == sym_type::CHAR) {
-                        cout << "\t" << setw(8) << ".globl" << curr_symbol->name << endl;
-                        cout << "\t" << setw(8) << ".data" << endl;
-                        cout << "\t" << setw(8) << ".type" << curr_symbol->name << ", @object" << endl;
-                        cout << "\t" << setw(8) << ".size" << curr_symbol->name << ", 1" << endl;
+                        cout << "\t" << ".globl " << curr_symbol->name << endl;
+                        cout << "\t" << ".data " << endl;
+                        cout << "\t" << ".type " << curr_symbol->name << ", @object" << endl;
+                        cout << "\t" << ".size " << curr_symbol->name << ", 1" << endl;
                         cout << curr_symbol->name << ":" << endl;
-                        cout << "\t" << setw(8) << ".byte" << glbChar << endl;
+                        cout << "\t" << ".byte " << glbChar << endl;
                     } 
                     else if(curr_symbol->type->type == sym_type::INT) {
-                        cout << "\t" << setw(8) << ".globl" << curr_symbol->name << endl;
-                        cout << "\t" << setw(8) << ".data" << endl;
-                        cout << "\t" << setw(8) << ".align" << 4 << endl;
-                        cout << "\t" << setw(8) << ".type" << curr_symbol->name << ", @object" << endl;
-                        cout << "\t" << setw(8) << ".size" << curr_symbol->name << ", 4" << endl;
+                        cout << "\t" << ".globl " << curr_symbol->name << endl;
+                        cout << "\t" << ".data " << endl;
+                        cout << "\t" << ".align " << 4 << endl;
+                        cout << "\t" << ".type " << curr_symbol->name << ", @object" << endl;
+                        cout << "\t" << ".size " << curr_symbol->name << ", 4" << endl;
                         cout << curr_symbol->name << ":" << endl;
-                        cout << "\t" << setw(8) << ".long" << glbInt << endl;
+                        cout << "\t" << ".long " << glbInt << endl;
                     } 
                     else if(curr_symbol->type->type == sym_type::PTR) {
                         cout << "\t" << ".section	.data.rel.local" << endl;
-                        cout << "\t" << setw(8) << ".align" << 8 << endl;
-                        cout << "\t" << setw(8) << ".type" << curr_symbol->name << ", @object" << endl;
-                        cout << "\t" << setw(8) << ".size" << curr_symbol->name << ", 8" << endl;
+                        cout << "\t" << ".align " << 8 << endl;
+                        cout << "\t" << ".type " << curr_symbol->name << ", @object" << endl;
+                        cout << "\t" << ".size " << curr_symbol->name << ", 8" << endl;
                         cout << curr_symbol->name << ":" << endl;
-                        cout << "\t" << setw(8) << ".quad" << glbString << endl;
+                        cout << "\t" << ".quad " << glbString << endl;
                     }
                 }
                 
@@ -411,6 +417,7 @@ void makeAssembly(string inputFile) {
         }
     }
     
+    cout.rdbuf(coutbuf);
 }
 
 int main(int argc, char const *argv[]) {
@@ -424,7 +431,15 @@ int main(int argc, char const *argv[]) {
     global_table->update();
     global_table->print();
     back_patch_last();
-    quad_arr->print();
-    makeAssembly(string(argv[1]));
+
+    //quad_arr->print();
+    int lineNo = 1;
+    for(auto quad: quad_arr) {
+        cout << lineNo++ << ": ";
+        quad->print();
+    }
+
+    makeAssembly(string(argv[1]), string(argv[2]));
+
     return 0;
 }
