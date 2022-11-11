@@ -1,0 +1,223 @@
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        Table Name: glb                        		 Parent Name: None
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+                Name                                    Type       Initial Value              Offset                Size               Child
+
+                main            function                                     int                                       0                   4                main
+            printInt            function                                     int                                       4                   4            printInt
+            printStr            function                                     int                                       8                   4            printStr
+             readInt            function                                     int                                      12                   4             readInt
+some_func_for_testing            function                                    void                                      16                   0some_func_for_testing
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        Table Name: main                        		 Parent Name: glb
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+                Name                                    Type       Initial Value              Offset                Size               Child
+
+             number1               local                                     int                   8                   0                   4                NULL
+             number2               local                                     int                  11                   4                   4                NULL
+             number3               local                                     int                  18                   8                   4                NULL
+             number4               local                                     int                   9                  12                   4                NULL
+             number5               local                                     int                 222                  16                   4                NULL
+             number6               local                                     int                                      20                   4                NULL
+             number7               local                                     int                                      24                   4                NULL
+              return               local                                     int                                      28                   4                NULL
+                 t10           temporary                                     int                                      32                   4                NULL
+                 t11           temporary                                     int                  11                  36                   4                NULL
+                 t12           temporary                                     int                  18                  40                   4                NULL
+                 t13           temporary                                     int                   9                  44                   4                NULL
+                 t14           temporary                                     int                 222                  48                   4                NULL
+                 t15           temporary                               ptr(char)      "\nNumber 2: "                  52                   8                NULL
+                 t16           temporary                                     int                                      60                   4                NULL
+                 t17           temporary                                     int                                      64                   4                NULL
+                 t18           temporary                               ptr(char)      "\nNumber 3: "                  68                   8                NULL
+                 t19           temporary                                     int                                      76                   4                NULL
+                 t20           temporary                                     int                                      80                   4                NULL
+                 t21           temporary                                     int                                      84                   4                NULL
+                 t22           temporary                               ptr(char) "\nn1 + number2 = "                  88                   8                NULL
+                 t23           temporary                                     int                                      96                   4                NULL
+                 t24           temporary                                     int                                     100                   4                NULL
+                 t25           temporary                                     int                                     104                   4                NULL
+                 t26           temporary                                     int                                     108                   4                NULL
+                 t27           temporary                               ptr(char) "\nn1 * number2 = "                 112                   8                NULL
+                 t28           temporary                                     int                                     120                   4                NULL
+                 t29           temporary                                     int                                     124                   4                NULL
+                  t3           temporary                                     int                   8                 128                   4                NULL
+                 t30           temporary                               ptr(char) "\nn1 / number2 = "                 132                   8                NULL
+                 t31           temporary                                     int                                     140                   4                NULL
+                 t32           temporary                                     int                                     144                   4                NULL
+                 t33           temporary                               ptr(char)"\nincrementing number1: "                 148                   8                NULL
+                 t34           temporary                                     int                                     156                   4                NULL
+                 t35           temporary                                    void                                     160                   0                NULL
+                 t36           temporary                               ptr(char)"\nValue of number1 after function call: "                 160                   8                NULL
+                 t37           temporary                                     int                                     168                   4                NULL
+                 t38           temporary                                     int                                     172                   4                NULL
+                 t39           temporary                               ptr(char)"\ndecrementing number1: "                 176                   8                NULL
+                  t4           temporary                               ptr(char)      "\nNumber 1: "                 184                   8                NULL
+                 t40           temporary                                     int                                     192                   4                NULL
+                 t41           temporary                                    void                                     196                   0                NULL
+                 t42           temporary                               ptr(char)"\nValue of number1 after function call: "                 196                   8                NULL
+                 t43           temporary                                     int                                     204                   4                NULL
+                 t44           temporary                                     int                                     208                   4                NULL
+                 t45           temporary                               ptr(char)"\nincrement after function call: "                 212                   8                NULL
+                 t46           temporary                                     int                                     220                   4                NULL
+                 t47           temporary                                     int                                     224                   4                NULL
+                 t48           temporary                                    void                                     228                   0                NULL
+                 t49           temporary                               ptr(char)"\nValue of number1 after function call: "                 228                   8                NULL
+                  t5           temporary                                     int                                     236                   4                NULL
+                 t50           temporary                                     int                                     240                   4                NULL
+                 t51           temporary                                     int                                     244                   4                NULL
+                 t52           temporary                               ptr(char)                "\n"                 248                   8                NULL
+                 t53           temporary                                     int                                     256                   4                NULL
+                 t54           temporary                                     int                   0                 260                   4                NULL
+                  t6           temporary                                     int                                     264                   4                NULL
+                  t7           temporary                               ptr(char)   "\n-(number1) = "                 268                   8                NULL
+                  t8           temporary                                     int                                     276                   4                NULL
+                  t9           temporary                                     int                                     280                   4                NULL
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        Table Name: printInt                        		 Parent Name: glb
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+                Name                                    Type       Initial Value              Offset                Size               Child
+
+                   n           parameter                                     int                                       0                   4                NULL
+              return               local                                     int                                       4                   4                NULL
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        Table Name: printStr                        		 Parent Name: glb
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+                Name                                    Type       Initial Value              Offset                Size               Child
+
+              return               local                                     int                                       0                   4                NULL
+                   s           parameter                               ptr(char)                                       4                   8                NULL
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        Table Name: readInt                        		 Parent Name: glb
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+                Name                                    Type       Initial Value              Offset                Size               Child
+
+                  eP           parameter                                ptr(int)                                       0                   8                NULL
+              return               local                                     int                                       8                   4                NULL
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        Table Name: some_func_for_testing                        		 Parent Name: glb
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+                Name                                    Type       Initial Value              Offset                Size               Child
+
+                   n           parameter                                     int                                       0                   4                NULL
+                  t0           temporary                               ptr(char)"Value passed to function: "                   4                   8                NULL
+                  t1           temporary                                     int                                      12                   4                NULL
+                  t2           temporary                                     int                                      16                   4                NULL
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+
+1: Start of function: some_func_for_testing
+2: t0 = "Value passed to function: "
+3: param t0
+4: t1 = call printStr, 1
+5: param n
+6: t2 = call printInt, 1
+7: End of function: some_func_for_testing
+8: Start of function: main
+9: t3 = 8
+10: number1 = t3
+11: t4 = "\nNumber 1: "
+12: param t4
+13: t5 = call printStr, 1
+14: param number1
+15: t6 = call printInt, 1
+16: t7 = "\n-(number1) = "
+17: param t7
+18: t8 = call printStr, 1
+19: t9 = - number1
+20: param t9
+21: t10 = call printInt, 1
+22: t11 = 11
+23: number2 = t11
+24: t12 = 18
+25: number3 = t12
+26: t13 = 9
+27: number4 = t13
+28: t14 = 222
+29: number5 = t14
+30: t15 = "\nNumber 2: "
+31: param t15
+32: t16 = call printStr, 1
+33: param number2
+34: t17 = call printInt, 1
+35: t18 = "\nNumber 3: "
+36: param t18
+37: t19 = call printStr, 1
+38: param number3
+39: t20 = call printInt, 1
+40: t21 = number1 + number2
+41: number5 = t21
+42: t22 = "\nn1 + number2 = "
+43: param t22
+44: t23 = call printStr, 1
+45: param number5
+46: t24 = call printInt, 1
+47: t25 = number1 * number2
+48: number6 = t25
+49: param number6
+50: t26 = call printInt, 1
+51: t27 = "\nn1 * number2 = "
+52: param t27
+53: t28 = call printStr, 1
+54: t29 = number1 / number2
+55: number7 = t29
+56: t30 = "\nn1 / number2 = "
+57: param t30
+58: t31 = call printStr, 1
+59: param number7
+60: t32 = call printInt, 1
+61: t33 = "\nincrementing number1: "
+62: param t33
+63: t34 = call printStr, 1
+64: number1 = number1 + 1
+65: param number1
+66: t35 = call some_func_for_testing, 1
+67: t36 = "\nValue of number1 after function call: "
+68: param t36
+69: t37 = call printStr, 1
+70: param number1
+71: t38 = call printInt, 1
+72: t39 = "\ndecrementing number1: "
+73: param t39
+74: t40 = call printStr, 1
+75: number1 = number1 - 1
+76: param number1
+77: t41 = call some_func_for_testing, 1
+78: t42 = "\nValue of number1 after function call: "
+79: param t42
+80: t43 = call printStr, 1
+81: param number1
+82: t44 = call printInt, 1
+83: t45 = "\nincrement after function call: "
+84: param t45
+85: t46 = call printStr, 1
+86: t47 = number1
+87: number1 = number1 + 1
+88: param t47
+89: t48 = call some_func_for_testing, 1
+90: t49 = "\nValue of number1 after function call: "
+91: param t49
+92: t50 = call printStr, 1
+93: param number1
+94: t51 = call printInt, 1
+95: t52 = "\n"
+96: param t52
+97: t53 = call printStr, 1
+98: t54 = 0
+99: return t54
+100: End of function: main

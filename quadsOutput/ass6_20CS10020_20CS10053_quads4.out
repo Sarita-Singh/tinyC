@@ -1,0 +1,227 @@
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        Table Name: glb                        		 Parent Name: None
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+                Name                                    Type       Initial Value              Offset                Size               Child
+
+                main            function                                     int                                       0                   4                main
+            printInt            function                                     int                                       4                   4            printInt
+            printStr            function                                     int                                       8                   4            printStr
+             readInt            function                                     int                                      12                   4             readInt
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        Table Name: main                        		 Parent Name: glb
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+                Name                                    Type       Initial Value              Offset                Size               Child
+
+                num1               local                                     int                 809                   0                   4                NULL
+                num2               local                                     int                1109                   4                   4                NULL
+                num3               local                                     int                1809                   8                   4                NULL
+              return               local                                     int                                      12                   4                NULL
+                  t0           temporary                                     int                 809                  16                   4                NULL
+                  t1           temporary                               ptr(char)      "\nNumber 1: "                  20                   8                NULL
+                 t10           temporary                                     int                                      28                   4                NULL
+                 t11           temporary                                     int                                      32                   4                NULL
+                 t12           temporary                               ptr(char)"\nTesting operators \n"                  36                   8                NULL
+                 t13           temporary                                     int                                      44                   4                NULL
+                 t14           temporary                               ptr(char)"\nTesting != operator: "                  48                   8                NULL
+                 t15           temporary                                     int                                      56                   4                NULL
+                 t16           temporary                               ptr(char)              "Pass"                  60                   8                NULL
+                 t17           temporary                                     int                                      68                   4                NULL
+                 t18           temporary                               ptr(char)              "Fail"                  72                   8                NULL
+                 t19           temporary                                     int                                      80                   4                NULL
+                  t2           temporary                                     int                                      84                   4                NULL
+                 t20           temporary                               ptr(char)"\nTesting == operator:"                  88                   8                NULL
+                 t21           temporary                                     int                                      96                   4                NULL
+                 t22           temporary                                     int                 809                 100                   4                NULL
+                 t23           temporary                               ptr(char)              "Pass"                 104                   8                NULL
+                 t24           temporary                                     int                                     112                   4                NULL
+                 t25           temporary                               ptr(char)              "Fail"                 116                   8                NULL
+                 t26           temporary                                     int                                     124                   4                NULL
+                 t27           temporary                               ptr(char)"\nTesting < operator: "                 128                   8                NULL
+                 t28           temporary                                     int                                     136                   4                NULL
+                 t29           temporary                               ptr(char)              "Pass"                 140                   8                NULL
+                  t3           temporary                                     int                                     148                   4                NULL
+                 t30           temporary                                     int                                     152                   4                NULL
+                 t31           temporary                               ptr(char)              "Fail"                 156                   8                NULL
+                 t32           temporary                                     int                                     164                   4                NULL
+                 t33           temporary                                     int                  81                 168                   4                NULL
+                 t34           temporary                                     int                                     172                   4                NULL
+                 t35           temporary                                     int                   7                 176                   4                NULL
+                 t36           temporary                               ptr(char)"\nTesting > operator: "                 180                   8                NULL
+                 t37           temporary                                     int                                     188                   4                NULL
+                 t38           temporary                               ptr(char)              "Pass"                 192                   8                NULL
+                 t39           temporary                                     int                                     200                   4                NULL
+                  t4           temporary                                     int                1109                 204                   4                NULL
+                 t40           temporary                               ptr(char)              "Fail"                 208                   8                NULL
+                 t41           temporary                                     int                                     216                   4                NULL
+                 t42           temporary                                     int                  81                 220                   4                NULL
+                 t43           temporary                                     int                                     224                   4                NULL
+                 t44           temporary                               ptr(char)"\nTesting <= operator: "                 228                   8                NULL
+                 t45           temporary                                     int                                     236                   4                NULL
+                 t46           temporary                               ptr(char)              "Pass"                 240                   8                NULL
+                 t47           temporary                                     int                                     248                   4                NULL
+                 t48           temporary                               ptr(char)              "Fail"                 252                   8                NULL
+                 t49           temporary                                     int                                     260                   4                NULL
+                  t5           temporary                               ptr(char)      "\nNumber 2: "                 264                   8                NULL
+                 t50           temporary                               ptr(char)"\nTesting <= operator: "                 272                   8                NULL
+                 t51           temporary                                     int                                     280                   4                NULL
+                 t52           temporary                               ptr(char)              "Pass"                 284                   8                NULL
+                 t53           temporary                                     int                                     292                   4                NULL
+                 t54           temporary                               ptr(char)              "Fail"                 296                   8                NULL
+                 t55           temporary                                     int                                     304                   4                NULL
+                 t56           temporary                               ptr(char)                "\n"                 308                   8                NULL
+                 t57           temporary                                     int                                     316                   4                NULL
+                 t58           temporary                                     int                   0                 320                   4                NULL
+                  t6           temporary                                     int                                     324                   4                NULL
+                  t7           temporary                                     int                                     328                   4                NULL
+                  t8           temporary                                     int                1809                 332                   4                NULL
+                  t9           temporary                               ptr(char)      "\nNumber 3: "                 336                   8                NULL
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        Table Name: printInt                        		 Parent Name: glb
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+                Name                                    Type       Initial Value              Offset                Size               Child
+
+                   n           parameter                                     int                                       0                   4                NULL
+              return               local                                     int                                       4                   4                NULL
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        Table Name: printStr                        		 Parent Name: glb
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+                Name                                    Type       Initial Value              Offset                Size               Child
+
+              return               local                                     int                                       0                   4                NULL
+                   s           parameter                               ptr(char)                                       4                   8                NULL
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        Table Name: readInt                        		 Parent Name: glb
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+                Name                                    Type       Initial Value              Offset                Size               Child
+
+                  eP           parameter                                ptr(int)                                       0                   8                NULL
+              return               local                                     int                                       8                   4                NULL
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+
+1: Start of function: main
+2: t0 = 809
+3: num1 = t0
+4: t1 = "\nNumber 1: "
+5: param t1
+6: t2 = call printStr, 1
+7: param num1
+8: t3 = call printInt, 1
+9: t4 = 1109
+10: num2 = t4
+11: t5 = "\nNumber 2: "
+12: param t5
+13: t6 = call printStr, 1
+14: param num2
+15: t7 = call printInt, 1
+16: t8 = 1809
+17: num3 = t8
+18: t9 = "\nNumber 3: "
+19: param t9
+20: t10 = call printStr, 1
+21: param num3
+22: t11 = call printInt, 1
+23: t12 = "\nTesting operators \n"
+24: param t12
+25: t13 = call printStr, 1
+26: t14 = "\nTesting != operator: "
+27: param t14
+28: t15 = call printStr, 1
+29: if num1 != num2 goto 31
+30: goto 35
+31: t16 = "Pass"
+32: param t16
+33: t17 = call printStr, 1
+34: goto 38
+35: t18 = "Fail"
+36: param t18
+37: t19 = call printStr, 1
+38: t20 = "\nTesting == operator:"
+39: param t20
+40: t21 = call printStr, 1
+41: t22 = 809
+42: num2 = t22
+43: if num1 == num2 goto 45
+44: goto 49
+45: t23 = "Pass"
+46: param t23
+47: t24 = call printStr, 1
+48: goto 52
+49: t25 = "Fail"
+50: param t25
+51: t26 = call printStr, 1
+52: t27 = "\nTesting < operator: "
+53: param t27
+54: t28 = call printStr, 1
+55: num2 = num3
+56: if num1 < num2 goto 58
+57: goto 62
+58: t29 = "Pass"
+59: param t29
+60: t30 = call printStr, 1
+61: goto 65
+62: t31 = "Fail"
+63: param t31
+64: t32 = call printStr, 1
+65: t33 = 81
+66: t34 = - t33
+67: num2 = t34
+68: t35 = 7
+69: num1 = t35
+70: t36 = "\nTesting > operator: "
+71: param t36
+72: t37 = call printStr, 1
+73: if num1 > num2 goto 75
+74: goto 79
+75: t38 = "Pass"
+76: param t38
+77: t39 = call printStr, 1
+78: goto 82
+79: t40 = "Fail"
+80: param t40
+81: t41 = call printStr, 1
+82: t42 = 81
+83: t43 = - t42
+84: num1 = t43
+85: t44 = "\nTesting <= operator: "
+86: param t44
+87: t45 = call printStr, 1
+88: if num1 <= num2 goto 90
+89: goto 94
+90: t46 = "Pass"
+91: param t46
+92: t47 = call printStr, 1
+93: goto 97
+94: t48 = "Fail"
+95: param t48
+96: t49 = call printStr, 1
+97: t50 = "\nTesting <= operator: "
+98: param t50
+99: t51 = call printStr, 1
+100: if num1 <= num2 goto 102
+101: goto 106
+102: t52 = "Pass"
+103: param t52
+104: t53 = call printStr, 1
+105: goto 109
+106: t54 = "Fail"
+107: param t54
+108: t55 = call printStr, 1
+109: t56 = "\n"
+110: param t56
+111: t57 = call printStr, 1
+112: t58 = 0
+113: return t58
+114: End of function: main

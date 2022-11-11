@@ -1,0 +1,117 @@
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        Table Name: glb                        		 Parent Name: None
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+                Name                                    Type       Initial Value              Offset                Size               Child
+
+                main            function                                     int                                       0                   4                main
+            printInt            function                                     int                                       4                   4            printInt
+            printStr            function                                     int                                       8                   4            printStr
+             readInt            function                                     int                                      12                   4             readInt
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        Table Name: main                        		 Parent Name: glb
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+                Name                                    Type       Initial Value              Offset                Size               Child
+
+                   a               local                                     int                                       0                   4                NULL
+                   b               local                                     int                                       4                   4                NULL
+                   p               local                                     int                                       8                   4                NULL
+              return               local                                     int                                      12                   4                NULL
+                  t0           temporary                               ptr(char)"\nMultiplying two numbers\n"                  16                   8                NULL
+                  t1           temporary                                     int                                      24                   4                NULL
+                 t10           temporary                               ptr(char)        "\nNum 1 = "                  28                   8                NULL
+                 t11           temporary                                     int                                      36                   4                NULL
+                 t12           temporary                                     int                                      40                   4                NULL
+                 t13           temporary                               ptr(char)        "\nNum 2 = "                  44                   8                NULL
+                 t14           temporary                                     int                                      52                   4                NULL
+                 t15           temporary                                     int                                      56                   4                NULL
+                 t16           temporary                               ptr(char)      "\nProduct = "                  60                   8                NULL
+                 t17           temporary                                     int                                      68                   4                NULL
+                 t18           temporary                                     int                                      72                   4                NULL
+                 t19           temporary                                     int                                      76                   4                NULL
+                  t2           temporary                               ptr(char)"\nEnter first number: "                  80                   8                NULL
+                 t20           temporary                               ptr(char)                "\n"                  88                   8                NULL
+                 t21           temporary                                     int                                      96                   4                NULL
+                 t22           temporary                                     int                   0                 100                   4                NULL
+                  t3           temporary                                     int                                     104                   4                NULL
+                  t4           temporary                                ptr(int)                                     108                   8                NULL
+                  t5           temporary                                     int                                     116                   4                NULL
+                  t6           temporary                               ptr(char)"\nEnter second number: "                 120                   8                NULL
+                  t7           temporary                                     int                                     128                   4                NULL
+                  t8           temporary                                ptr(int)                                     132                   8                NULL
+                  t9           temporary                                     int                                     140                   4                NULL
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        Table Name: printInt                        		 Parent Name: glb
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+                Name                                    Type       Initial Value              Offset                Size               Child
+
+                 num           parameter                                     int                                       0                   4                NULL
+              return               local                                     int                                       4                   4                NULL
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        Table Name: printStr                        		 Parent Name: glb
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+                Name                                    Type       Initial Value              Offset                Size               Child
+
+                   c           parameter                               ptr(char)                                       0                   8                NULL
+              return               local                                     int                                       8                   4                NULL
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        Table Name: readInt                        		 Parent Name: glb
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+                Name                                    Type       Initial Value              Offset                Size               Child
+
+                  eP           parameter                                ptr(int)                                       0                   8                NULL
+              return               local                                     int                                       8                   4                NULL
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+
+1: Start of function: main
+2: t0 = "\nMultiplying two numbers\n"
+3: param t0
+4: t1 = call printStr, 1
+5: t2 = "\nEnter first number: "
+6: param t2
+7: t3 = call printStr, 1
+8: t4 = & p
+9: param t4
+10: t5 = call readInt, 1
+11: a = t5
+12: t6 = "\nEnter second number: "
+13: param t6
+14: t7 = call printStr, 1
+15: t8 = & p
+16: param t8
+17: t9 = call readInt, 1
+18: b = t9
+19: t10 = "\nNum 1 = "
+20: param t10
+21: t11 = call printStr, 1
+22: param a
+23: t12 = call printInt, 1
+24: t13 = "\nNum 2 = "
+25: param t13
+26: t14 = call printStr, 1
+27: param b
+28: t15 = call printInt, 1
+29: t16 = "\nProduct = "
+30: param t16
+31: t17 = call printStr, 1
+32: t18 = a * b
+33: param t18
+34: t19 = call printInt, 1
+35: t20 = "\n"
+36: param t20
+37: t21 = call printStr, 1
+38: t22 = 0
+39: return t22
+40: End of function: main

@@ -21,8 +21,6 @@ int getCharAscii(string a) {
     return (int)a[1];
 }
 
-
-
 string stack_location(string param) {
     //cout << "stack_location" << endl;
     if(current_func_act_rec->shift.count(param))
@@ -75,7 +73,6 @@ void makeAssembly(string inputFile, string outputFile) {
     ofstream out(outputFile);
     streambuf *coutbuf = cout.rdbuf();
     cout.rdbuf(out.rdbuf());
-
     //cout << "makeAssembly" << endl;
     int labelCount = 0;
     bool isFuncBody = false;
@@ -159,12 +156,14 @@ void makeAssembly(string inputFile, string outputFile) {
             cout << "\t" << "subq " << "$" << -current_func_act_rec->final_shift << ", %rsp" << endl;
 
             for(auto param:curr_table->params){
-                popRegfromStack(param, param_cnt++);
+                pushRegtoStack(param, param_cnt);
+                param_cnt++;
             }
         }
         else if((*quadIterator)->opcode =="labelend") {
-            cout << "\t" << "movq %rbp, %rsp" << endl;
-            cout << "\t" << "popq %rbp" << endl;
+            // cout << labelsInAsm[quadIterator - quad_arr.begin()] << ":" << endl;
+            cout << "\t" << "movq " << "%rbp, %rsp" << endl;
+            cout << "\t" << "popq " << "%rbp" << endl;
             cout << "\t" << ".cfi_def_cfa 7, 8" << endl;
             cout << "\t" << "ret" << endl;
             cout << "\t" << ".cfi_endproc" << endl;
@@ -214,7 +213,7 @@ void makeAssembly(string inputFile, string outputFile) {
                 else if(opcode == "call") {
                     int paramsCount = stoi(arg2);
                     while(paramsCount) {
-                        pushRegtoStack(parameters.top(), --paramsCount);
+                        popRegfromStack(parameters.top(), --paramsCount);
                         parameters.pop();
                     }
 
@@ -426,6 +425,7 @@ int main(int argc, char const *argv[]) {
     curr_table = global_table;
     
     yyin = fopen(argv[1], "r");
+    if(!yyin) cout<<"Error opening file\n";
     yyparse();
     
     global_table->update();

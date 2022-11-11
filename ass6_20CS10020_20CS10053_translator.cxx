@@ -17,13 +17,13 @@ int sym_type::getWidth()
 {
     //cout << "symtype::getWidth" << endl;
     if (this->type == CHAR)
-        return sizeof(char);
+        return 1;
     else if (this->type == INT )
-        return __SIZEOF_INT__;
+        return 4;
     else if(this->type == PTR)
-        return __SIZEOF_POINTER__;
+        return 8;
     else if (this->type == FLOAT)
-        return __SIZEOF_FLOAT__;
+        return 8;
     else if (this->type == ARR)
         return symWidth * (arrType->getWidth());
     return 0;

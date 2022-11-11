@@ -1,0 +1,119 @@
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        Table Name: glb                        		 Parent Name: None
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+                Name                                    Type       Initial Value              Offset                Size               Child
+
+                main            function                                     int                                       0                   4                main
+            printInt            function                                     int                                       4                   4            printInt
+            printStr            function                                     int                                       8                   4            printStr
+             readInt            function                                     int                                      12                   4             readInt
+       some_function            function                                     int                                      16                   4       some_function
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        Table Name: main                        		 Parent Name: glb
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+                Name                                    Type       Initial Value              Offset                Size               Child
+
+                   a               local                                     int                                       0                   4                NULL
+                   b               local                                     int                                       4                   4                NULL
+                   e               local                                ptr(int)                                       8                   8                NULL
+              return               local                                     int                                      16                   4                NULL
+                  t0           temporary                               ptr(char)"\nTesting Functions\n"                  20                   8                NULL
+                  t1           temporary                                     int                                      28                   4                NULL
+                 t10           temporary                                     int                                      32                   4                NULL
+                 t11           temporary                                     int                                      36                   4                NULL
+                 t12           temporary                               ptr(char)"\nAddress returned from function: "                  40                   8                NULL
+                 t13           temporary                                     int                                      48                   4                NULL
+                 t14           temporary                                     int                                      52                   4                NULL
+                 t15           temporary                               ptr(char)                "\n"                  56                   8                NULL
+                 t16           temporary                                     int                                      64                   4                NULL
+                 t17           temporary                                     int                   0                  68                   4                NULL
+                  t2           temporary                                     int                   3                  72                   4                NULL
+                  t3           temporary                                ptr(int)                                      76                   8                NULL
+                  t4           temporary                               ptr(char)"\nPassing parameter to function :\n        int some_function(int *a)    \n"                  84                   8                NULL
+                  t5           temporary                                     int                                      92                   4                NULL
+                  t6           temporary                               ptr(char)"\nValue passed to function: "                  96                   8                NULL
+                  t7           temporary                                     int                                     104                   4                NULL
+                  t8           temporary                                     int                                     108                   4                NULL
+                  t9           temporary                               ptr(char)                "\n"                 112                   8                NULL
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        Table Name: printInt                        		 Parent Name: glb
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+                Name                                    Type       Initial Value              Offset                Size               Child
+
+                 num           parameter                                     int                                       0                   4                NULL
+              return               local                                     int                                       4                   4                NULL
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        Table Name: printStr                        		 Parent Name: glb
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+                Name                                    Type       Initial Value              Offset                Size               Child
+
+                   c           parameter                               ptr(char)                                       0                   8                NULL
+              return               local                                     int                                       8                   4                NULL
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        Table Name: readInt                        		 Parent Name: glb
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+                Name                                    Type       Initial Value              Offset                Size               Child
+
+                  eP           parameter                                ptr(int)                                       0                   8                NULL
+              return               local                                     int                                       8                   4                NULL
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        Table Name: some_function                        		 Parent Name: glb
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+                Name                                    Type       Initial Value              Offset                Size               Child
+
+                   a           parameter                                ptr(int)                                       0                   8                NULL
+              return               local                                     int                                       8                   4                NULL
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+
+1: Start of function: some_function
+2: return a
+3: End of function: some_function
+4: Start of function: main
+5: t0 = "\nTesting Functions\n"
+6: param t0
+7: t1 = call printStr, 1
+8: t2 = 3
+9: b = t2
+10: t3 = & b
+11: e = t3
+12: t4 = "\nPassing parameter to function :\n        int some_function(int *a)    \n"
+13: param t4
+14: t5 = call printStr, 1
+15: t6 = "\nValue passed to function: "
+16: param t6
+17: t7 = call printStr, 1
+18: param b
+19: t8 = call printInt, 1
+20: t9 = "\n"
+21: param t9
+22: t10 = call printStr, 1
+23: param b
+24: t11 = call some_function, 1
+25: a = t11
+26: t12 = "\nAddress returned from function: "
+27: param t12
+28: t13 = call printStr, 1
+29: param a
+30: t14 = call printInt, 1
+31: t15 = "\n"
+32: param t15
+33: t16 = call printStr, 1
+34: t17 = 0
+35: return t17
+36: End of function: main

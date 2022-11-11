@@ -1,36 +1,74 @@
-int printStr(char *c);
-int printInt(int i);
+int printStr(char *s);
 int readInt(int *eP);
+int printInt(int n);
 
-int main () {
-  printStr("\nPrint first N fibonacci numbers\n\nCHECK FOR BINARY OP AND LOOP\n\n");
+int main() {    
+    int num1 = 809;
+    printStr("\nNumber 1: ");
+    printInt(num1);
 
-  printStr("\nEnter a value of n: ");
-  int i,ep;
-  i=readInt(&ep);
-  printStr("\nEntered number is: ");
-  printInt(i);
+    int num2 = 1109;
+    printStr("\nNumber 2: ");
+    printInt(num2);
 
-  printStr("\n\nThe first ");
-  printInt(i);
-  printStr(" Fibonacci numbers are:\n\n        ");
+    int num3 = 1809;
+    printStr("\nNumber 3: ");
+    printInt(num3);
 
-  if(i>0) printInt(0);
-  printStr(" ");
-  if(i>1) printInt(1);
-  printStr(" ");
-  int a=0,b=1,c;
-  for(int j=2;j<i;j++){
-    c = a+b;
-    printInt(c);
-    printStr(" ");
-    a = b;
-    b = c;
+    printStr("\nTesting operators \n");
 
-    int r=j/10;
-    if(r*10==j){
-      printStr("\n        ");
+    printStr("\nTesting != operator: ");
+    if (num1 != num2) {
+        printStr("Pass");
     }
-  }
-  return 0;
+    else {
+        printStr("Fail");
+    }
+
+    printStr("\nTesting == operator:");
+    num2 = 809;
+    if (num1 == num2) {
+        printStr("Pass");
+    }
+    else {
+        printStr("Fail");
+    }
+
+    printStr("\nTesting < operator: ");
+    num2 = num3;
+    if (num1 < num2) {
+        printStr("Pass");
+    }
+    else {
+        printStr("Fail");
+    }
+
+    num2 = -81;
+    num1 = 7;
+    printStr("\nTesting > operator: ");
+    if (num1 > num2) {
+        printStr("Pass");
+    }
+    else {
+        printStr("Fail");
+    }
+
+    num1 = -81;
+    printStr("\nTesting <= operator: ");
+    if (num1 <= num2) {
+        printStr("Pass");
+    }
+    else {
+        printStr("Fail");
+    }
+
+    printStr("\nTesting <= operator: ");
+    if (num1 <= num2) {
+        printStr("Pass");
+    }
+    else {
+        printStr("Fail");
+    }
+    printStr("\n");
+    return 0;
 }
